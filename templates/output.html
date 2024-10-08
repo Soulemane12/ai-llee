@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Output</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('read_home') }}">Home</a></li>
+                <li><a href="{{ url_for('convert_notes') }}">Convert Notes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="output-container"></section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const outputType = localStorage.getItem('outputType');
+            const question = localStorage.getItem('question');
+            const choices = JSON.parse(localStorage.getItem('choices') || '[]');
+            const correctAnswer = localStorage.getItem('correctAnswer');
+            const outputContainer = document.getElementById('output-container');
+
+            if (outputType === 'quiz') {
+                let choicesHtml = choices.map((choice, index) => `
+                    <div>
+                        <input type="radio" name="quiz-choice" id="choice${index}" value="${choice.charAt(0)}">
+                        <label for="choice${index}">${choice}</label>
+                    </div>
+                `).join('');
+
+                outputContainer.innerHTML = `
+                    <h2>Quiz</h2>
+                    <p><strong>Question:</strong> ${question}</p>
+                    ${choicesHtml}
+                    <button id="submit-quiz">Submit Answer</button>
+                    <div id="quiz-feedback"></div>
+                `;
+
+                document.getElementById('submit-quiz').addEventListener('click', () => {
+                    const selectedChoice = document.querySelector('input[name="quiz-choice"]:checked');
+                    const feedback = document.getElementById('quiz-feedback');
+                    if (selectedChoice) {
+                        if (selectedChoice.value.toLowerCase() === correctAnswer.charAt(0).toLowerCase()) {
+                            feedback.textContent = 'Correct!';
+                            feedback.style.color = 'green';
+                        } else {
+                            feedback.textContent = `Wrong! The correct answer is: ${correctAnswer}`;
+                            feedback.style.color = 'red';
+                        }
+                    } else {
+                        feedback.textContent = 'Please select an answer!';
+                        feedback.style.color = 'orange';
+                    }
+                });
+            } else if (outputType === 'flashcard') {
+                outputContainer.innerHTML = `
+                    <h2>Flashcard</h2>
+                    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+                        <div class="front">${question}</div>
+                        <div class="back">${correctAnswer}</div>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

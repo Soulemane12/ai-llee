@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Notes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/convert-notes.js" defer></script> <!-- Load JS file after HTML content -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>AdaptStudy.ai</h1>
+            </div>
+            <div class="header-center">
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/convert-notes" class="active">Convert Notes</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <!-- Input Notes Section -->
+            <section class="note-input">
+                <h2>Input Notes</h2>
+                <textarea id="notes-textarea" placeholder="Type your notes here..." rows="10" cols="50"></textarea>
+            </section>
+
+            <!-- Buttons for Quiz and Flashcards -->
+            <section class="style-selection">
+                <h4>Pick Your Option:</h4>
+                <div class="style-buttons">
+                    <button id="quiz-button">Generate Quiz</button>
+                    <button id="flashcard-button">Generate Flashcards</button>
+                </div>
+            </section>
+
+            <!-- Output Section -->
+            <section class="output-section">
+                <div id="output-container"></div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

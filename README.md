@@ -1,1 +1,1 @@
-# ai-llee
+# ai_learningtype
